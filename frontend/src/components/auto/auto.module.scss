@@ -1,0 +1,43 @@
+@import '../../App.scss';
+
+.container{
+    width: 100%;
+    .list{
+        width: 80%;
+        margin: calc(var(--index) * 2) auto;
+    }
+}
+.auto{
+            @include f-center();
+            width: 100%;
+            border-radius: calc(var(--index)* 1);
+            background-color: brown;
+            padding: calc(var(--index) * .5) 0 0 calc(var(--index) * .7);
+            margin-top: calc(var(--index) * 1);
+            &__info{
+                width: 20%;
+                &__name{
+                    font-size: calc(var(--index) * 1);
+                }
+                &__num{
+                    font-size: calc(var(--index) * .7);
+                }
+                &__rent__btn{
+                    margin: calc(var(--index) * 1) 0 calc(var(--index)* 1) 0;
+                    border-radius: calc(var(--index)* .77);
+                }
+            }
+            &__price{
+                @include f-center();
+                width: 40%;
+                &__wrapper{
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+            img{
+                width: 30%;
+                border-bottom-right-radius: 20px;
+            }
+        }

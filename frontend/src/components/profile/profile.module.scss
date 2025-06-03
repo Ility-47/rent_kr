@@ -1,0 +1,52 @@
+@mixin f-center{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile{
+    h1{
+        margin-bottom: calc(var(--index) * 3);
+    }
+    &__wrapper{
+        background-color: rgb(198, 204, 209);
+        border-radius: 15px;
+        width: 30%;
+        margin-top: calc(var(--index) * 2);
+    }
+    
+    .setting{
+        width: 100%;
+        background-color: transparent;
+        height: fit-content;
+        text-align: left;
+        border: none;
+        border-radius: 0;
+        .redBtn{
+            color: rgb(172, 11, 11);
+        }
+        @include f-center();
+        &:not(:first-child){
+            border-top: 1px solid  rgb(155, 158, 161); 
+        }
+        &__info{
+            width: fit-content;
+            @include f-center();
+        }
+        &__wrapper{
+            padding: 0 calc(var(--index) * .6);
+        }
+        i{
+            font-size: calc(var(--index) * 1);
+        }
+        &__title{
+            font-size: calc(var(--index) * .9);        
+            color: var(--text);
+        }
+        &__subtitle{
+            font-size: calc(var(--index) * .5);        
+            color: var(--text-light);
+        }
+    }
+}
+

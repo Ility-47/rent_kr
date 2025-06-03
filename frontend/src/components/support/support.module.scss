@@ -1,0 +1,52 @@
+
+.support{
+    width: 100%;
+    h1{
+        font-size: calc(var(--index) * 2);
+        line-height: 180%;
+    }
+    form{
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        .form__wrapper{
+            margin-top: calc(var(--index) * 2);
+            display: flex;
+            flex-direction: column;
+        }
+        label{
+            font-size: calc(var(--index) * 1);
+            line-height: 150%;
+            margin-bottom: calc(var(--index) * .5);
+        }
+        select{
+            width: fit-content;
+            outline: none;
+            border-radius: 15px 15px 0 0;
+            font-size: calc(var(--index) * .9);
+            padding: calc(var(--index) *.2) calc(var(--index) *.4);
+            border: 0;
+            >option{
+                border-radius: 5px;
+            }
+        }
+        textarea{
+            width: 100%;
+            height: 40vh;
+            border-radius: 25px;
+            resize: none;
+            outline: none;
+            padding: calc(var(--index) * .5) calc(var(--index) * 1);
+            font-size: calc(var(--index) * .7);
+            line-height: 150%;
+        }
+        button{
+            margin-left: auto;
+            width: fit-content;
+            margin-top: calc(var(--index) * 1);
+            border-radius: 25px;
+            font-size: calc(var(--index) * .8);
+        }
+    }
+}

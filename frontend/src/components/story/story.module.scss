@@ -1,0 +1,19 @@
+@mixin f-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.story{
+    width: 100%;
+    &__list{
+        width: 80%;
+        margin: calc(var(--index) * 2) auto;
+    }
+    .item{
+        @include f-center();
+        border-radius: 20px;
+        background-color: aquamarine;
+        font-size: calc(var(--index) * 1);
+        padding: calc(var(--index) * .5) calc(var(--index) * 1);
+    }
+}

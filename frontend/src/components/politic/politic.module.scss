@@ -1,0 +1,19 @@
+table {
+    border-spacing: 0;
+    width: 80%;
+    margin: calc(var(--index) * 2) auto;
+    tr:nth-child(odd) {
+        background-color: #ff33cc;
+    }
+    tr:nth-child(even) {
+        background-color: #e495e4;
+    }
+    tr:nth-child(1) {
+        background-color: #223451;
+    }    
+    td{
+        margin: 0;
+    }
+}
+
+

@@ -1,0 +1,36 @@
+# Удаляем все node_modules по всему проекту
+**/node_modules/
+
+# Удаляем файлы логов и дебага
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Удаление env-файлов с секретами
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.example
+
+# Исключаем папки build/dist
+/build/
+/dist/
+
+# Исключаем кэш
+.DS_Store
+Thumbs.db
+.cache/
+tmp/
+temp/
+
+# Исключаем IDE-файлы
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
