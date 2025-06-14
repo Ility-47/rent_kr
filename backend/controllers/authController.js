@@ -2,16 +2,20 @@ const jwt = require('jsonwebtoken');
 const UserService = require('../services/user');
 const { validationResult } = require('express-validator');
 const config = require('../config');
+const { pool } = require('../config/db'); // Для транзакции
 
 const AuthController = {
   register: async (req, res, next) => {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-      const { username, email, password, age, pasport, v_u } = req.body;
+    const { username, email, password, age, pasport, v_u } = req.body;
+
+    let client;
+    try {
+      await pool.connect();
 
       // Проверка существования пользователя
       const existingUser = await UserService.findByEmail(email);
@@ -19,28 +23,36 @@ const AuthController = {
         return res.status(400).json({ error: 'Email already exists' });
       }
 
-      // Создание пользователя
-      const newUser = await UserService.createUser({ username, email, password, age, pasport, v_u });
+      // Начинаем транзакцию
+      await pool.query('BEGIN');
+
+      // Создание клиента
+      const newUser = await UserService.createUser({ username, age, pasport, v_u });
+
+      // Создание учётной записи
+      await UserService.createUserAuth({ username, email, password });
 
       // Генерация JWT
       const token = jwt.sign(
-        { userId: newUser.rows[0].id },
+        { userId: newUser.id },
         config.JWT_SECRET,
         { expiresIn: '1h' }
       );
 
+      await pool.query('COMMIT');
+
       res.status(201).json({
-        user: newUser.rows[0],
+        user: newUser,
         token
       });
     } catch (error) {
+      await pool.query('ROLLBACK');
       next(error);
     }
   },
 
   login: async (req, res, next) => {
     try {
-      // Валидация входных данных
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -48,17 +60,15 @@ const AuthController = {
 
       const { email, password } = req.body;
 
-      // Проверка пользователя
       const { isValid, user, error } = await UserService.validateUser(email, password);
       if (!isValid) {
         return res.status(401).json({ error });
       }
 
-      // Генерация JWT токена
       const token = jwt.sign(
         { userId: user.id, email: user.email },
         config.JWT_SECRET,
-        { expiresIn: '24h' } // Токен действителен 24 часа
+        { expiresIn: '24h' }
       );
 
       res.json({

@@ -10,10 +10,14 @@
         margin: calc(var(--index) * 2) auto;
     }
     .item{
-        @include f-center();
-        border-radius: 20px;
-        background-color: aquamarine;
+        @include f-center;
         font-size: calc(var(--index) * 1);
         padding: calc(var(--index) * .5) calc(var(--index) * 1);
+        background-color: white;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.152);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-bottom: calc(var(--index) * 1);
     }
 }

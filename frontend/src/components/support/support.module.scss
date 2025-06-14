@@ -3,7 +3,7 @@
     width: 100%;
     h1{
         font-size: calc(var(--index) * 2);
-        line-height: 180%;
+        line-height: 80%;
     }
     form{
         width: 80%;
@@ -27,6 +27,7 @@
             font-size: calc(var(--index) * .9);
             padding: calc(var(--index) *.2) calc(var(--index) *.4);
             border: 0;
+            background-color: #e8e9e9;
             >option{
                 border-radius: 5px;
             }
@@ -40,6 +41,7 @@
             padding: calc(var(--index) * .5) calc(var(--index) * 1);
             font-size: calc(var(--index) * .7);
             line-height: 150%;
+            background-color: #e8e9e9;
         }
         button{
             margin-left: auto;

@@ -1,43 +1,109 @@
-@import '../../App.scss';
-
-.container{
-    width: 100%;
-    .list{
-        width: 80%;
-        margin: calc(var(--index) * 2) auto;
-    }
+@mixin f-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.auto{
-            @include f-center();
-            width: 100%;
-            border-radius: calc(var(--index)* 1);
-            background-color: brown;
-            padding: calc(var(--index) * .5) 0 0 calc(var(--index) * .7);
-            margin-top: calc(var(--index) * 1);
-            &__info{
-                width: 20%;
-                &__name{
-                    font-size: calc(var(--index) * 1);
-                }
-                &__num{
-                    font-size: calc(var(--index) * .7);
-                }
-                &__rent__btn{
-                    margin: calc(var(--index) * 1) 0 calc(var(--index)* 1) 0;
-                    border-radius: calc(var(--index)* .77);
-                }
-            }
-            &__price{
-                @include f-center();
-                width: 40%;
-                &__wrapper{
-                    display: flex;
-                    flex-direction: column;
-                    text-align: center;
-                }
-            }
-            img{
-                width: 30%;
-                border-bottom-right-radius: 20px;
+
+.container {
+    width: 100%;
+    padding: 0 calc(var(--index) * 2);
+    background-color: #f8f9fa;
+}
+
+.list {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: calc(var(--index) * 2);
+}
+
+.auto {
+    @include f-center;
+    flex-direction: column;
+    position: relative;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.152);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+
+    &__info {
+        width: 100%;
+        height: 100%;
+        padding: calc(var(--index) * 1) 0 calc(var(--index) * .5) calc(var(--index) * 1);
+        text-align: left;
+        @include f-center();
+
+        &__wrapper {
+            width: 50%;
+            height: 100%;
+        }
+
+        &__name {
+            font-size: calc(var(--index) * 1.2);
+            font-weight: 600;
+            color: #333;
+            margin-bottom: calc(var(--index) * 0.3);
+        }
+
+        &__num {
+            font-size: calc(var(--index) * 0.7);
+            color: #888;
+            margin-bottom: calc(var(--index) * 1);
+        }
+
+        &__rent__btn {
+            padding: calc(var(--index) * 0.5) calc(var(--index) * 1.2);
+            font-size: calc(var(--index) * 0.85);
+            font-weight: 500;
+            border: none;
+            border-radius: 25px;
+            background-color: #4a90e2;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: auto;
+
+            &:hover {
+                background-color: #3a7bc8;
             }
         }
+
+        img {
+            width: 55%;
+        }
+    }
+
+    &__price {
+        @include f-center;
+        justify-content: space-around;
+        width: 100%;
+        padding: calc(var(--index) * 0.8) 0;
+        background-color: #f1f3f5;
+        border-top: 1px solid #e9ecef;
+
+        &__wrapper {
+            text-align: center;
+        }
+
+        span {
+            display: block;
+            font-size: calc(var(--index) * 0.7);
+            color: #666;
+
+            &:last-child {
+                font-size: calc(var(--index) * 0.9);
+                font-weight: 600;
+                color: #333;
+            }
+        }
+    }
+}

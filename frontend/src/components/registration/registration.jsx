@@ -39,6 +39,7 @@ const Registration = () => {
         e.preventDefault();
         
         try {
+            console.log(formData)
             
             const response = await fetch('http://localhost:3001/api/auth/register', {
                 method: 'POST',
@@ -53,8 +54,8 @@ const Registration = () => {
                         age: formData.age,
                         pasport: formData.pasport,
                         v_u: formData.v_u,
-                        phone: formData.phone,
-                        pay: formData.pay
+                        // phone: formData.phone,
+                        // pay: formData.pay
                     }
                 )
             });
@@ -114,7 +115,7 @@ const Registration = () => {
             });
 
             const data = await response.json();
-            console.log('Login response:', data);
+
             if (!response.ok) {
                 // Обработка ошибок валидации
                 if (data.errors) {
@@ -207,15 +208,18 @@ const Registration = () => {
                                 value={formData.pasport}
                                 onChange={handleChange} />
                         </div>
-                        <div className={s.form__wrapper}>
-                            <label htmlFor="v_u">Номер водительского удостоверения</label>
+                         <div className={s.form__wrapper}>
+                            <label htmlFor="password">Пароль</label>
                             <input
-                                type="text"
-                                name='v_u'
-                                placeholder='Введите ваше ВУ'
-                                value={formData.v_u}
-                                onChange={handleChange} />
+                                name='password'
+                                type="password"
+                                placeholder='Введите ваш пароль'
+                                value={formData.password}
+                                onChange={handleChange}
+                            />
+                            {errors.password && <div className="error">{errors.password}</div>}  
                         </div>
+                        
                         <div className={s.form__wrapper}>
                             <label htmlFor="email">Почта</label>
                             <input
@@ -227,17 +231,7 @@ const Registration = () => {
                             />
                             {errors.email && <div className="error">{errors.email}</div>}  
                         </div>
-                        <div className={s.form__wrapper}>
-                            <label htmlFor="password">Пароль</label>
-                            <input
-                                name='password'
-                                type="password"
-                                placeholder='Введите ваш пароль'
-                                value={formData.password}
-                                onChange={handleChange}
-                            />
-                            {errors.password && <div className="error">{errors.password}</div>}  
-                        </div>
+                        
                         <div className={s.form__wrapper}>
                             <label htmlFor="check_password">Подтверждение пароля</label>
                             <input
@@ -247,6 +241,15 @@ const Registration = () => {
                                 value={formData.check_password}
                                 onChange={handleChange}
                             />
+                        </div>
+                       <div className={s.form__wrapper}>
+                            <label htmlFor="v_u">Номер водительского удостоверения</label>
+                            <input
+                                type="text"
+                                name='v_u'
+                                placeholder='Введите ваше ВУ'
+                                value={formData.v_u}
+                                onChange={handleChange} />
                         </div>
                         <button className={s.form__submit} type='submit'>Зарегистрироваться</button>
                     </form>
@@ -280,7 +283,7 @@ const Registration = () => {
             </div>
             ):(
                 <>
-                    <div>{userData.fio} желаете выйти из аккаунта?</div>
+                    <div>Желаете выйти из аккаунта?</div>
                     <button onClick={handleLogOut}>Выйти</button>
                 </>
             )}

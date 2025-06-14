@@ -50,9 +50,9 @@ const Politic = () => {
     }
 
     return (
-        <section>
+        <section className={s.container}>
             <h1>Политика компании</h1>
-            <h2>Таблицы возможных нарушений</h2>
+            <h2>Возможные нарушения</h2>
             <table>
                 <tbody>
                     <tr>
@@ -71,7 +71,7 @@ const Politic = () => {
 
                 </tbody>
             </table>
-            <h2>Таблица вохможных повреждений</h2>
+            <h2>Возможные повреждения</h2>
             <table>
                 <tbody>
                     <tr>

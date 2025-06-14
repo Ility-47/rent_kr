@@ -1,4 +1,4 @@
-const Pool = require('pg').Pool
+const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'postgres',
@@ -8,6 +8,20 @@ const pool = new Pool({
   port: 5432,
 });
 
+// Простая обёртка над pool.query
+const query = (text, params) => pool.query(text, params);
+
+// Проверка подключения
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('Ошибка подключения к БД:', err.stack);
+  } else {
+    console.log('Подключение к БД успешно');
+  }
+});
+
+// Экспортируем всё вместе
 module.exports = {
-    query: (text, params) => pool.query(text, params),
+  pool,
+  query
 };

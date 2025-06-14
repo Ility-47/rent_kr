@@ -27,7 +27,7 @@ const Menu = () =>{
                         <Link onClick={handleMenu} to="/Auto">Автомобили</Link>
                         <Link onClick={handleMenu} to="/Story">Мои поездки</Link>
                         <Link onClick={handleMenu} to="/Politic">Политика компании</Link>
-                        <Link onClick={handleMenu} to="/Support">Поддержка</Link>
+                        {/* <Link onClick={handleMenu} to="/Support">Поддержка</Link> */}
                         <Link onClick={handleMenu} to="/Registration">Регистрация</Link>
                     </nav>
                 </div>

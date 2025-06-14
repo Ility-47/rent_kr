@@ -10,7 +10,7 @@ router.post('/register',
     body('username').not().isEmpty().trim(),
     body('age').trim(),
     body('pasport').trim(),
-    body('v_u').trim(),
+    body('v_u').trim()
   ],
   AuthController.register
 );
