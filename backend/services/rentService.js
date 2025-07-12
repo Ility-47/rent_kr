@@ -26,27 +26,6 @@ module.exports = {
     `);
     return result.rows;
   },
-  // BookedAuto: async ({id_client}) => {
-  //   const result = await query(`
-  //     SELECT a.*
-  //     FROM auto a
-  //     JOIN akt k ON a.id = k.id_auto
-  //     WHERE k.id_client = $1
-  //       AND CURRENT_TIMESTAMP BETWEEN k.start_rent AND k.finish_rent;
-  //   `,[id_client]);
-  //   return result.rows;
-  // },
-
-  // getBookedAuto: async ({id_client}) => {
-  //   const result = await query(`
-  //     SELECT a.*
-  //     FROM auto a
-  //     JOIN akt k ON a.id = k.id_auto
-  //     WHERE k.id_client = $1
-  //       AND CURRENT_TIMESTAMP BETWEEN k.start_rent AND k.finish_rent;
-  //   `,[id_client]);
-  //   return result.rows;
-  // }
   updateAutoAvailability: async (autoId, available) => {
     const result = await query(
       'UPDATE auto SET available = $1 WHERE id = $2 RETURNING *',

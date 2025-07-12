@@ -1,46 +1,3 @@
-// @mixin f-c-c{
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-// }
-
-// .container{
-//     width: 100%;
-//     height: 100vh;
-//     @include f-c-c();
-//     .controls{
-//         width: 60%;
-//         display: flex;
-//         align-items: center;
-//         justify-content: space-around;
-//     }
-//     form{
-//         @include f-c-c();   
-//         .form__wrapper{
-//             width: 100%;
-//             display: flex;
-//             flex-direction: column;
-//             label{
-//                 font-size: calc(var(--index) * 1);
-//                 width: 100%;
-//             }
-//             input{
-//                 width: 100%;
-//                 font-size: calc(var(--index) * .9);
-//                 padding: calc(var(--index) * .4) calc(var(--index) * .8);
-//                 border-radius: 25px;
-//                 outline: none;
-//                 border: none;
-//             }
-//         }
-//         .form__submit{
-//             width: fit-content;
-//             margin-top: calc(var(--index) * 1);
-//         }
-//     }
-// }
-
 @mixin f-c-c {
     display: flex;
     flex-direction: column;
@@ -56,11 +13,9 @@
 
     .success,
     .error {
-        font-size: calc(var(--index) * 0.85);
-        margin-bottom: calc(var(--index) * 0.8);
-        padding: calc(var(--index) * 0.4) calc(var(--index) * 0.8);
-        border-radius: 6px;
-        text-align: center;
+        font-size: calc(var(--index) * 0.45);
+        margin:  0 0 calc(var(--index) * 0.8) calc(var(--index) * 0.4);
+        position: absolute;
     }
 
     .success {
@@ -70,9 +25,7 @@
     }
 
     .error {
-        color: #721c24;
-        background-color: #f8d7da;
-        border: 1px solid #f5c6cb;
+        color: #b43945;
     }
 
     .controls {
@@ -84,6 +37,7 @@
         margin-bottom: calc(var(--index) * 1.5);
         position: relative;
 
+   
         button {
             flex: 1;
             padding: calc(var(--index) * 0.8) 0;
@@ -96,16 +50,24 @@
             color: #555;
             position: relative;
             transition: color 0.3s ease;
+            
         }
 
         .unactive {
             color: #868e96;
             pointer-events: none;
         }
-
-        .controls__registration.active,
-        .controls__login.active {
-            color: #4a90e2;
+        &__registration,
+        &__login{
+            &::after{
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 15%;
+                width: 70%;
+                height: 2px;
+                background: #3a7bc8;
+            }
         }
 
     }
@@ -180,5 +142,17 @@
                 background-color: #3a7bc8;
             }
         }
+    }
+}
+
+.logout{
+    width: 100%;
+    height: 90vh;
+    @include f-c-c();
+    flex-direction: column;
+    font-size: calc(var(--index) * 1.2);
+    button{
+        margin-top: calc(var(--index) * 3);
+        font-size: calc(var(--index) * 1);
     }
 }

@@ -172,7 +172,6 @@ const Auto = () => {
                         isBooked={true}
                         userId={userId}
                     />
-                    {console.log(bookedAuto)}
                 </div>
             ) : (
                 <div className={s.list}>

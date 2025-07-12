@@ -145,11 +145,17 @@ const AutoModal = ({ car, onClose, image, userId, onConfirm }) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const userData = JSON.parse(localStorage.getItem('user'))
 
+    const formatLocalDateTime = (date) => {
+        const pad = (num) => num.toString().padStart(2, '0');
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    };
+
     // Устанавливаем текущую дату при открытии модалки и обновляем каждую минуту
     useEffect(() => {
         const updateCurrentTime = () => {
             const now = new Date();
-            const formattedDate = now.toISOString().slice(0, 16);
+            console.log('Текущая дата: ', now)
+            const formattedDate = formatLocalDateTime(now);
             setStartDate(formattedDate);
         };
 
@@ -173,7 +179,7 @@ const AutoModal = ({ car, onClose, image, userId, onConfirm }) => {
                 end.setDate(start.getDate() + 1);
             }
 
-            setEndDate(end.toISOString().slice(0, 16));
+            setEndDate(formatLocalDateTime(end));
         }
     }, [startDate, rentType]);
 

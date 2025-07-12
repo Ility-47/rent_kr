@@ -18,10 +18,10 @@ const AuthController = {
       await pool.connect();
 
       // Проверка существования пользователя
-      const existingUser = await UserService.findByEmail(email);
-      if (existingUser.rows.length > 0) {
-        return res.status(400).json({ error: 'Email already exists' });
-      }
+      // const existingUser = await UserService.findByEmail(email);
+      // if (existingUser.rows.length > 0) {
+      //   return res.status(400).json({ error: 'Email already exists' });
+      // }
 
       // Начинаем транзакцию
       await pool.query('BEGIN');

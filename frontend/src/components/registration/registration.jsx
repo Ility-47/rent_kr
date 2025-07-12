@@ -3,14 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import s from './registration.module.scss'
 
 const Registration = () => {
-
-    //Получаем пользователя из localStorage
     const userData = localStorage.getItem('user')
-
-    // навигация после входа
     const navigate = useNavigate()
-
-    //логика от нейронки
 
     const [formData, setFormData] = useState({
         username: '',
@@ -27,16 +21,94 @@ const Registration = () => {
     const [errors, setErrors] = useState({});
     const [message, setMessage] = useState('');
 
+    const validateForm = () => {
+        const newErrors = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passportRegex = /^[0-9]{4}\s?[0-9]{6}$/;
+        const vuRegex = /^[0-9]{2}\s?[0-9]{2}\s?[0-9]{6}$/;
+        const phoneRegex = /^\+?[0-9]{10,15}$/;
+
+        // Проверка ФИО
+        if (!formData.username.trim()) {
+            newErrors.username = 'ФИО обязательно';
+        } else if (formData.username.length < 3) {
+            newErrors.username = 'ФИО слишком короткое';
+        }
+
+        // Проверка возраста
+        if (!formData.age) {
+            newErrors.age = 'Возраст обязателен';
+        } else if (isNaN(formData.age) || formData.age < 18 || formData.age > 100) {
+            newErrors.age = 'Возраст должен быть от 18 до 100 лет';
+        }
+
+        // Проверка паспорта
+        if (!formData.pasport) {
+            newErrors.pasport = 'Паспорт обязателен';
+        } else if (!passportRegex.test(formData.pasport)) {
+            newErrors.pasport = 'Неверный формат паспорта (пример: 1234 567890)';
+        }
+
+        // Проверка водительского удостоверения
+        if (!formData.v_u) {
+            newErrors.v_u = 'Водительское удостоверение обязательно';
+        } else if (!vuRegex.test(formData.v_u)) {
+            newErrors.v_u = 'Неверный формат (пример: 12 34 567890)';
+        }
+
+        // Проверка email
+        if (!formData.email) {
+            newErrors.email = 'Email обязателен';
+        } else if (!emailRegex.test(formData.email)) {
+            newErrors.email = 'Неверный формат email';
+        }
+
+        // Проверка пароля
+        if (!formData.password) {
+            newErrors.password = 'Пароль обязателен';
+        } else if (formData.password.length < 6) {
+            newErrors.password = 'Пароль должен быть не менее 6 символов';
+        }
+
+        // Проверка подтверждения пароля
+        if (!formData.check_password) {
+            newErrors.check_password = 'Подтвердите пароль';
+        } else if (formData.password !== formData.check_password) {
+            newErrors.check_password = 'Пароли не совпадают';
+        }
+
+        // Проверка телефона (если используется)
+        if (formData.phone && !phoneRegex.test(formData.phone)) {
+            newErrors.phone = 'Неверный формат телефона';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
+        
+        // Очищаем ошибку при изменении поля
+        if (errors[name]) {
+            setErrors(prev => {
+                const newErrors = {...prev};
+                delete newErrors[name];
+                return newErrors;
+            });
+        }
     };
 
     const handleSubmitRegistration = async (e) => {
         e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
         
         try {
             console.log(formData)
@@ -54,16 +126,12 @@ const Registration = () => {
                         age: formData.age,
                         pasport: formData.pasport,
                         v_u: formData.v_u,
-                        // phone: formData.phone,
-                        // pay: formData.pay
                     }
                 )
             });
 
-
             const data = await response.json();
             if (!response.ok) {
-                // Если есть ошибки валидации
                 if (data.errors) {
                     const validationErrors = {};
                     data.errors.forEach(err => {
@@ -76,10 +144,9 @@ const Registration = () => {
                 return;
             }
 
-            // Успешная регистрация
             setMessage(data.message);
             setErrors({});
-            // Можно перенаправить пользователя или очистить форму
+            
             setFormData({
                 username: '',
                 age: '',
@@ -88,7 +155,6 @@ const Registration = () => {
                 email: '',
                 password: '',
                 check_password: '',
-
             });
         } catch (error) {
             setErrors({ general: 'Ошибка соединения с сервером' });
@@ -117,7 +183,6 @@ const Registration = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                // Обработка ошибок валидации
                 if (data.errors) {
                     const validationErrors = {};
                     data.errors.forEach(err => {
@@ -130,16 +195,13 @@ const Registration = () => {
                 return;
             }
 
-            // Успешный вход
             setMessage(data.message);
             setErrors({});
 
-            // Сохраняем токен и данные пользователя
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
 
-            // Перенаправляем пользователя
-            navigate('/Profile'); // Или другой защищенный маршрут
+            navigate('/Profile');
 
         } catch (error) {
             setErrors({ general: 'Ошибка соединения с сервером' });
@@ -151,12 +213,10 @@ const Registration = () => {
         localStorage.removeItem('user');
     }
 
-    //Сокрытие ненужной формы и кнопки
     const [active, setActive] = useState(false)
     const handleActive = () => {
         setActive(!active)
     }
-
 
     return (
         <>
@@ -166,7 +226,7 @@ const Registration = () => {
                 {errors.general && <div className="error">{errors.general}</div>}
                 <div className={s.controls}>
                     <button
-                        className={active ? s.controls__registration : s.controls__registration + '' + s.unactive }
+                        className={!active ? s.controls__registration : s.controls__registration + '' + s.unactive }
                         onClick={handleActive}
                         disabled={!active} >
                         Регистрация
@@ -189,6 +249,7 @@ const Registration = () => {
                                 placeholder='Введите ваше ФИО'
                                 value={formData.username}
                                 onChange={handleChange} />
+                            {errors.username && <div className={s.error}>{errors.username}</div>}
                         </div>
                         <div className={s.form__wrapper}>
                             <label htmlFor="age">Возраст</label>
@@ -198,28 +259,29 @@ const Registration = () => {
                                 placeholder='Введите ваш возраст'
                                 value={formData.age}
                                 onChange={handleChange} />
+                            {errors.age && <div className={s.error}>{errors.age}</div>}
                         </div>
                         <div className={s.form__wrapper}>
                             <label htmlFor="pasport">Паспорт</label>
                             <input
                                 type="text"
                                 name='pasport'
-                                placeholder='Введите ваш паспорт'
+                                placeholder='Введите серию и номер паспорта (1234 567890)'
                                 value={formData.pasport}
                                 onChange={handleChange} />
+                            {errors.pasport && <div className={s.error}>{errors.pasport}</div>}
                         </div>
                          <div className={s.form__wrapper}>
                             <label htmlFor="password">Пароль</label>
                             <input
                                 name='password'
                                 type="password"
-                                placeholder='Введите ваш пароль'
+                                placeholder='Введите ваш пароль (минимум 6 символов)'
                                 value={formData.password}
                                 onChange={handleChange}
                             />
-                            {errors.password && <div className="error">{errors.password}</div>}  
+                            {errors.password && <div className={s.error}>{errors.password}</div>}  
                         </div>
-                        
                         <div className={s.form__wrapper}>
                             <label htmlFor="email">Почта</label>
                             <input
@@ -229,27 +291,28 @@ const Registration = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                             />
-                            {errors.email && <div className="error">{errors.email}</div>}  
+                            {errors.email && <div className={s.error}>{errors.email}</div>}  
                         </div>
-                        
                         <div className={s.form__wrapper}>
                             <label htmlFor="check_password">Подтверждение пароля</label>
                             <input
                                 name='check_password'
                                 type="password"
-                                placeholder='Введите ваш пароль'
+                                placeholder='Повторите ваш пароль'
                                 value={formData.check_password}
                                 onChange={handleChange}
                             />
+                            {errors.check_password && <div className={s.error}>{errors.check_password}</div>}
                         </div>
-                       <div className={s.form__wrapper}>
+                        <div className={s.form__wrapper}>
                             <label htmlFor="v_u">Номер водительского удостоверения</label>
                             <input
                                 type="text"
                                 name='v_u'
-                                placeholder='Введите ваше ВУ'
+                                placeholder='Введите номер ВУ (12 34 567890)'
                                 value={formData.v_u}
                                 onChange={handleChange} />
+                            {errors.v_u && <div className={s.error}>{errors.v_u}</div>}
                         </div>
                         <button className={s.form__submit} type='submit'>Зарегистрироваться</button>
                     </form>
@@ -264,7 +327,7 @@ const Registration = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                             />
-                            {errors.email && <div className="error">{errors.email}</div>}                            
+                            {errors.email && <div className={s.error}>{errors.email}</div>}                            
                         </div>
                         <div className={s.form__wrapper}>
                             <label htmlFor="password">Пароль</label>
@@ -275,22 +338,20 @@ const Registration = () => {
                                 value={formData.password}
                                 onChange={handleChange}
                             />
-                            {errors.password && <div className="error">{errors.password}</div>}                            
+                            {errors.password && <div className={s.error}>{errors.password}</div>}                            
                         </div>
                         <button className={s.form__submit} type='submit'>Войти</button>
                     </form>
                 )}
             </div>
             ):(
-                <>
+                <section className={s.logout}>
                     <div>Желаете выйти из аккаунта?</div>
                     <button onClick={handleLogOut}>Выйти</button>
-                </>
+                </section>
             )}
         </>
     )
 }
-
-
 
 export default Registration
