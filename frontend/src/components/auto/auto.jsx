@@ -87,11 +87,11 @@ const Auto = () => {
             setAuto(autosData);
 
             // 2. Загружаем текущую аренду пользователя
-            if (userId) {
+            //if (userId) {
                 const bookedResponse = await fetch(`${API_URL}/api/auto/booked/${userId}`);
                 const bookedData = await bookedResponse.json();
                 setBookedAuto(bookedData.length > 0 ? bookedData[0] : null);
-            }
+            //}
         } catch (error) {
             console.error('Ошибка загрузки данных:', error);
         }
