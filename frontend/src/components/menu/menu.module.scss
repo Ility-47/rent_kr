@@ -119,3 +119,25 @@
         pointer-events: none;
     }
 }
+
+@media (width <= 600px) {
+    .container{
+        .menu__user{
+            img{
+                width: calc(var(--index) * 4);
+                height: calc(var(--index) * 4);
+            }
+            &__name{
+                font-size: calc(var(--index) * .95);
+                margin-left: calc(var(--index) * 1.2);
+            }
+        }
+        .menu{
+            nav{
+                a{
+                    font-size: calc(var(--index) * 0.8);
+                }
+            }
+        }
+    }
+}

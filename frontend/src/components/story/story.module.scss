@@ -21,3 +21,17 @@
         margin-bottom: calc(var(--index) * 1);
     }
 }
+
+@media (width <= 600px){
+    .story__list{
+        width: 100%;
+    }
+    .story{
+        .item{
+            font-size: calc(var(--index) * .9);
+            h5{
+                font-size: calc(var(--index) * .7);
+            }
+        }
+    }
+}

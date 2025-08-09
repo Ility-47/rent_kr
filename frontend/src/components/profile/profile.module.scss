@@ -229,3 +229,12 @@
     @keyframes spin {
         to { transform: rotate(360deg); }
     }
+
+    @media (width <= 600px) {
+        .profile{
+            h1{
+                width: 100%;
+                font-size: calc(var(--index) * 1.9);
+            }
+        }
+    }

@@ -156,3 +156,28 @@
         font-size: calc(var(--index) * 1);
     }
 }
+
+@media(width < 600px) {
+    .container{
+        .controls{
+            width: 90%;
+            max-width: 500px;
+            button{
+                font-size: calc(var(--index) * 2);
+            }
+        }
+        form{
+            .form__submit{
+                width: 100%;
+            }
+        }
+        .registration{
+            grid-template-columns: 1fr;
+        }
+        .login{
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+    
+}

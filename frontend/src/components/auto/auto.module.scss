@@ -107,3 +107,12 @@
         }
     }
 }
+
+@media (width <= 600px) {
+    .container{
+        padding: 0;
+        h1{
+            font-size: calc(var(--index) * 1.9);
+        }
+    }
+}

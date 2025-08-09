@@ -105,3 +105,9 @@ select {
     border: 10px solid rgb(38, 36, 36);
   }
 }
+
+@media (width < 600px) {
+  container {
+    padding: calc(var(--index) * 6.5) calc(var(--index) * 2) calc(var(--index) * 1.5) calc(var(--index) * 2);
+  }
+}
