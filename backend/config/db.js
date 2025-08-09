@@ -1,11 +1,19 @@
 const { Pool } = require('pg');
 
+// const pool = new Pool({
+//   user: 'postgres',
+//   host: 'localhost',
+//   database: 'rent',
+//   password: '12345',
+//   port: 5432,
+// });
+
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'rent',
-  password: '12345',
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    require: true, // Обязательное использование SSL
+    rejectUnauthorized: false // Только для разработки!
+  }
 });
 
 // Простая обёртка над pool.query
