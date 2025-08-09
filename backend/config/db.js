@@ -7,6 +7,7 @@ const pool = new Pool({
     rejectUnauthorized: false // Только для разработки!
   }
 })
+
 // Простая обёртка над pool.query
 const query = (text, params) => pool.query(text, params);
 
