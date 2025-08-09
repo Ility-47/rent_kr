@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import s from './registration.module.scss'
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://rent-kr.onrender.com';
+
 const Registration = () => {
     const userData = localStorage.getItem('user')
     const navigate = useNavigate()
@@ -113,7 +115,7 @@ const Registration = () => {
         try {
             console.log(formData)
             
-            const response = await fetch('http://localhost:3001/api/auth/register', {
+            const response = await fetch(`${API_URL}/api/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -169,7 +171,7 @@ const Registration = () => {
         }));
     
         try {
-            const response = await fetch('http://localhost:3001/api/auth/login', {
+            const response = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -2,6 +2,8 @@ import s from './auto.module.scss'
 import { useState, useEffect } from 'react'
 import AutoModal from '../modal/autoModal'
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://rent-kr.onrender.com';
+
 const AutoCard = ({ props, onClick, isBooked, userId }) => {
     let image
     if (props.name.trim() == "Volkswagen Polo") {
@@ -80,13 +82,13 @@ const Auto = () => {
     const loadData = async () => {
         try {
             // 1. Загружаем доступные авто
-            const autosResponse = await fetch('http://localhost:3001/api/auto');
+            const autosResponse = await fetch(`${API_URL}/api/auto`);
             const autosData = await autosResponse.json();
             setAuto(autosData);
 
             // 2. Загружаем текущую аренду пользователя
             if (userId) {
-                const bookedResponse = await fetch(`http://localhost:3001/api/auto/booked/${userId}`);
+                const bookedResponse = await fetch(`${API_URL}/api/auto/booked/${userId}`);
                 const bookedData = await bookedResponse.json();
                 setBookedAuto(bookedData.length > 0 ? bookedData[0] : null);
             }
@@ -108,7 +110,7 @@ const Auto = () => {
     const handleConfirmRent = async (rentData) => {
         console.log(rentData)
         try {
-            const response = await fetch('http://localhost:3001/api/rent', {
+            const response = await fetch(`${API_URL}/api/rent`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -118,11 +120,11 @@ const Auto = () => {
 
             if (response.ok) {
                 // Вместо общего loadData(), обновим только нужные данные
-                const autosResponse = await fetch('http://localhost:3001/api/auto');
+                const autosResponse = await fetch(`${API_URL}/api/auto`);
                 const autosData = await autosResponse.json();
                 setAuto(autosData);
 
-                const bookedResponse = await fetch(`http://localhost:3001/api/auto/booked/${userId}`);
+                const bookedResponse = await fetch(`${API_URL}/api/auto/booked/${userId}`);
                 const bookedData = await bookedResponse.json();
                 setBookedAuto(bookedData.length > 0 ? bookedData[0] : null);
 
@@ -140,7 +142,7 @@ const Auto = () => {
     const onFinishRent = async (carId, clientId) => {
         clientId = Number(clientId)
         try {
-            const response = await fetch('http://localhost:3001/api/finish-rent', {
+            const response = await fetch(`${API_URL}/api/finish-rent`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

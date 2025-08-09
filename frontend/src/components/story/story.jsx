@@ -2,6 +2,8 @@ import s from './story.module.scss';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://rent-kr.onrender.com';
+
 const StoryItem = ({ item }) => {
 
   const formattedDateStart = new Date(item.start).toLocaleString('ru-RU', {
@@ -45,7 +47,7 @@ const userId = JSON.parse(localStorage.getItem('user')).id
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/history/${userId}`);
+        const response = await fetch(`${API_URL}/api/history/${userId}`);
         if (!response.ok) throw new Error('Ошибка загрузки данных');
 
         const data = await response.json();

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import s from './profile.module.scss';
 import Modal from 'react-modal';
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://rent-kr.onrender.com';
+
 Modal.setAppElement('#root');
 
 const ErrorMessage = ({ message, onClose }) => {
@@ -53,7 +55,7 @@ const Profile = () => {
                     return;
                 }
 
-                const response = await fetch('http://localhost:3001/api/users/me', {
+                const response = await fetch(`${API_URL}/api/users/me`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -141,7 +143,7 @@ const Profile = () => {
                     return;
             }
 
-            const response = await fetch(`http://localhost:3001${endpoint}`, {
+            const response = await fetch(`${API_URL}${endpoint}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

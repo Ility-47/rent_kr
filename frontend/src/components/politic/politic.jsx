@@ -1,6 +1,8 @@
 import s from './politic.module.scss'
 import { useState, useEffect } from 'react'
 
+const API_URL = import.meta.env.VITE_API_URL || 'https://rent-kr.onrender.com';
+
 const TableLine = ({ props }) => {
     return (
         <>
@@ -31,7 +33,7 @@ const Politic = () => {
         getDamage();
     }, []);
     async function getError() {
-        fetch('http://localhost:3001/api/error')
+        fetch(`${API_URL}/api/error`)
             .then(response => {
                 return response.text();
             })
@@ -40,7 +42,7 @@ const Politic = () => {
             });
     }
     async function  getDamage() {
-        fetch('http://localhost:3001/api/damage')
+        fetch(`${API_URL}/api/damage`)
             .then(response => {
                 return response.text();
             })
