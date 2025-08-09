@@ -1,11 +1,16 @@
 const { Pool } = require('pg');
 
+//const pool = new Pool({
+//  user: 'postgres',
+//  host: 'localhost',
+//  database: 'rent',
+//  password: '12345',
+//  port: 5432,
+//});
+
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'rent',
-  password: '12345',
-  port: 5432,
+  connectionString: process.env.DATABASE_URL, // берётся из переменных окружения
+  ssl: { rejectUnauthorized: false } // важно для Vercel PostgreSQL!
 });
 
 // Простая обёртка над pool.query
